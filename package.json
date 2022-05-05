@@ -1,0 +1,28 @@
+{
+  "name": "intern-signup",
+  "version": "1.0.0",
+  "description": "- Create a group database `groupXDatabase`. You can clean the db you previously used and resue that.\r - This time each group should have a *single git branch*. Coordinate amongst yourselves by ensuring every next person pulls the code last pushed by a team mate. You branch will be checked as part of the demo. Branch name should follow the naming convention `project/internshipGroupX`\r - Follow the naming conventions exactly as instructed. The backend code will be integrated with the front-end application which means any mismatch in the expected request body will lead to failure in successful integration.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AmitKumarSharma4046/Intern-SignUp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AmitKumarSharma4046/Intern-SignUp/issues"
+  },
+  "homepage": "https://github.com/AmitKumarSharma4046/Intern-SignUp#readme",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "mongoose": "^6.3.2",
+    "nodemon": "^2.0.16"
+  }
+}
