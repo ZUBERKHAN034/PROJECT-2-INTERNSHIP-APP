@@ -1,18 +1,6 @@
 const internModel = require('../models/internModel');
 const collegeModel = require('../models/collegeModel');
-
-///////////////// [ FIELD VALIDATION ] /////////////////
-const isValid = function (value) {
-    if (typeof value === "undefined" || typeof value === null) return false
-    if (typeof value === "string" && value.trim().length == 0) return false
-    return true
-}
-
-///////////////// [ REQUEST BODY VALIDATION ] /////////////////
-const isValidRequestBody = function (requestBody) {
-    return Object.keys(requestBody).length > 0
-}
-
+const validator = require('../validator/validation')
 
 ///////////////// [ CREATE INTERN HANDLER ] /////////////////
 const createInter = async function (req, res) {
@@ -20,13 +8,13 @@ const createInter = async function (req, res) {
     try {
 
         const internData = req.body;
-        if (!isValidRequestBody(internData)) {
+        if (!validator.isValidReqBody(internData)) {
             return res.status(400).send({ status: false, msg: "Invalid request! Please provide intern details" });
         }
 
         const { name, mobile, email, collegeName } = internData;
 
-        if (!isValid(name)) {
+        if (!validator.isValid(name)) {
             return res.status(400).send({ status: false, msg: "Please enter Full Name its a required field!" });
         }
 
@@ -34,7 +22,7 @@ const createInter = async function (req, res) {
             return res.status(400).send({ status: false, msg: "Please enter Email its a required field!" });
         }
 
-        if (!(/^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/.test(email))) {
+        if (!validator.isValidEmail(email)) {
             return res.status(400).send({ status: false, msg: "Please enter a valid email address" })
         }
 
@@ -56,7 +44,7 @@ const createInter = async function (req, res) {
             return res.status(409).send({ status: false, msg: "Mobile Number already exists" });
         }
 
-        if (!isValid(collegeName)) {
+        if (!validator.isValid(collegeName)) {
             return res.status(400).send({ status: false, msg: "Please enter College Name its a required field!" });
         }
 

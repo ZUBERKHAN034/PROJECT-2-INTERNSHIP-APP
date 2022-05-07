@@ -1,29 +1,6 @@
 const collegeModel = require('../models/collegeModel')
 const internModel = require('../models/internModel')
-
-///////////////// [ FIELD VALIDATION ] /////////////////
-const isValid = function (value) {
-    if (typeof value === "undefined" || typeof value === null) return false
-    if (typeof value === "string" && value.trim().length == 0) return false
-    return true
-}
-
-///////////////// [ REQUEST BODY VALIDATION ] /////////////////
-const isValidRequestBody = function (requestBody) {
-    return Object.keys(requestBody).length > 0
-}
-
-///////////////// [ URL VALIDATION ] /////////////////
-const isValidURL = function (str) {
-    let pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
-        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-        '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-        '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-        '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
-    return !!pattern.test(str);
-}
-
+const validator = require('../validator/validation')
 
 ///////////////// [ CREATE COLLEGE HANDLER ] /////////////////
 const createCollege = async function (req, res) {
@@ -32,23 +9,23 @@ const createCollege = async function (req, res) {
 
         const requestBody = req.body
 
-        if (!isValidRequestBody(requestBody)) {
+        if (!validator.isValidReqBody(requestBody)) {
             return res.status(400).send({ status: false, msg: "Invalid request! Please provide college details" })
         }
 
-        if (!isValid(requestBody.name)) {
+        if (!validator.isValid(requestBody.name)) {
             return res.status(400).send({ status: false, msg: "Please provide college name" })
         }
 
-        if (!isValid(requestBody.fullName)) {
+        if (!validator.isValid(requestBody.fullName)) {
             return res.status(400).send({ status: false, msg: "Please provide college fullName" })
         }
 
-        if (!isValid(requestBody.logoLink)) {
+        if (!validator.isValid(requestBody.logoLink)) {
             return res.status(400).send({ status: false, msg: "Please provide college logoLink" })
         }
 
-        if (!isValidURL(requestBody.logoLink)) {
+        if (!validator.isValidURL(requestBody.logoLink)) {
             return res.status(400).send({ status: false, msg: "Please provide a valid college logoLink" })
         }
 
@@ -75,7 +52,7 @@ const getInternsByCollege = async function (req, res) {
 
         const query = req.query
 
-        if (!isValidRequestBody(query)) {
+        if (!validator.isValidReqBody(query)) {
             return res.status(400).send({ status: false, msg: "Provide a query [ collegeName ]" })
         }
 
